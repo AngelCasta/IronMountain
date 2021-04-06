@@ -1,1 +1,72 @@
-csdfs
+<div class="container">
+    <h1>Usuarios</h1>
+    <form [formGroup]="form" (ngSubmit)="save($event)">
+        <div class="form-row">
+            <div class="row">
+                <input type="text" formControlName="Name" placeholder="Nombre">
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <input type="text" formControlName="Address" placeholder="Domicilio">
+        </div>
+        <br />
+
+        <div class="row">
+            <input type="tel" formControlName="Phone" placeholder="Teléfono">
+        </div>
+        <br />
+        <div class="row">
+            <input type="text" formControlName="Dni" placeholder="CURP">
+        </div>
+
+        <br />
+        <div class="row">
+            <div class="col-7">
+                <button type="button" (click)="resetForm()">Limpiar</button>
+            </div>
+            <div class="col">
+                <button type="button" [disabled]="form.invalid || deleteValidator()" (click)="deleteUser()">Eliminar</button>
+            </div>
+            <div class="col">
+                <button type="submit" [disabled]="form.invalid">Guardar</button>
+            </div>
+        </div>
+
+    </form>
+    <br />
+    <div class="row">
+        <div class="col">
+            <div class="form-group">
+                <input type="text" class="form-control" name="filterUser" placeholder="Search.."
+                    [(ngModel)]="filterUser">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Dirección</th>
+                        <th>Teléfono</th>
+                        <th>CURP</th>
+                        <th>Fecha de Registro</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let user of users | search:filterUser; let i = index" (click)="getRows(user)">
+                        <th>{{user.Id}}</th>
+                        <td>{{user.Name}}</td>
+                        <td>{{user.Address}}</td>
+                        <td>{{user.Phone}}</td>
+                        <td>{{user.Dni}}</td>
+                        <td>{{user.CreationDate}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
