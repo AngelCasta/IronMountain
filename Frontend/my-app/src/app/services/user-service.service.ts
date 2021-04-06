@@ -8,9 +8,7 @@ export class UserServiceService {
   _url = "https://localhost:44317/api/User"
   constructor(
     private http:HttpClient
-  ) {
-    console.log("service")
-   }
+  ) {  }
    getUsers(){
      let header = new HttpHeaders()
      .set('Type-content', 'aplications/json')

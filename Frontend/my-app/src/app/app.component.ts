@@ -25,6 +25,9 @@ export class AppComponent {
     private formBuilder:FormBuilder
   ){
     this.buildForm();
+    this.updateTableData()
+  }
+  updateTableData(){
     this.userService.getUsers().subscribe((resp:any)=>{      
       this.users=resp.items
     })
@@ -43,11 +46,8 @@ export class AppComponent {
     if(this.form.valid){
       const value = this.form.value
       if(this.activeUser.Id == 0){        
-        this.userService.postUsers(value).toPromise().then((resp:any) =>{
-          console.log(resp)
-          this.userService.getUsers().subscribe((resp:any)=>{      
-            this.users=resp.items
-          })
+        this.userService.postUsers(value).toPromise().then((resp:any) =>{          
+          this.updateTableData()
         }) 
         this.resetForm()       
       }else{
@@ -56,10 +56,7 @@ export class AppComponent {
         this.activeUser.Phone = value.Phone
         this.activeUser.Dni = value.Dni
         this.userService.updateUser(this.activeUser).toPromise().then((resp:any) =>{
-          console.log(resp)
-          this.userService.getUsers().subscribe((resp:any)=>{      
-            this.users=resp.items
-          })
+          this.updateTableData()
         })
         this.resetForm()
         this.activeUser.Id = 0
@@ -71,10 +68,7 @@ export class AppComponent {
   }
   deleteUser(){
     if(this.activeUser.Id != 0) this.userService.deleteUser(this.activeUser).toPromise().then((resp:any)=>{
-      console.log(resp)
-      this.userService.getUsers().subscribe((resp:any)=>{      
-        this.users=resp.items
-      })
+      this.updateTableData()
     })
     this.resetForm()
   }

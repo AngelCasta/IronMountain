@@ -1,35 +1,35 @@
 <div class="container">
-    <h1>Usuarios</h1>
+    <h1 class="text-center">Usuarios</h1>
     <form [formGroup]="form" (ngSubmit)="save($event)">
         <div class="form-row">
             <div class="row">
-                <input type="text" formControlName="Name" placeholder="Nombre">
+                <input type="text" class="form-control" formControlName="Name" placeholder="Nombre">
             </div>
         </div>
         <br />
         <div class="row">
-            <input type="text" formControlName="Address" placeholder="Domicilio">
+            <input type="text" class="form-control" formControlName="Address" placeholder="Domicilio">
         </div>
         <br />
 
         <div class="row">
-            <input type="tel" formControlName="Phone" placeholder="Teléfono">
+            <input type="tel" class="form-control" formControlName="Phone" placeholder="Teléfono">
         </div>
         <br />
         <div class="row">
-            <input type="text" formControlName="Dni" placeholder="CURP">
+            <input type="text" class="form-control" formControlName="Dni" placeholder="CURP">
         </div>
 
         <br />
         <div class="row">
             <div class="col-7">
-                <button type="button" (click)="resetForm()">Limpiar</button>
+                <button type="button" class="btn btn-secondary" (click)="resetForm()">Limpiar</button>
             </div>
             <div class="col">
-                <button type="button" [disabled]="form.invalid || deleteValidator()" (click)="deleteUser()">Eliminar</button>
+                <button type="button" class="btn btn-secondary" [disabled]="form.invalid || deleteValidator()" (click)="deleteUser()">Eliminar</button>
             </div>
             <div class="col">
-                <button type="submit" [disabled]="form.invalid">Guardar</button>
+                <button type="submit" class="btn btn-primary" [disabled]="form.invalid">Guardar</button>
             </div>
         </div>
 
