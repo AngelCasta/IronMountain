@@ -1,45 +1,79 @@
 <div class="container">
-    <h1 class="text-center">Usuarios</h1>
-    <form [formGroup]="form" (ngSubmit)="save($event)">
-        <div class="form-row">
-            <div class="row">
-                <input type="text" class="form-control" formControlName="Name" placeholder="Nombre">
-            </div>
+    <h1 class="text-center">Usuarios</h1>    
+    <ng-template #MessageDialog>
+        <div class="modal-header">
+            <h4 class="modal-tittle">
+               {{modalParams.title}}
+            </h4>
         </div>
-        <br />
-        <div class="row">
-            <input type="text" class="form-control" formControlName="Address" placeholder="Domicilio">
+        <div class="modal-body">
+            <div class="container">
+                <form [formGroup]="form" (ngSubmit)="save($event)">
+                    <div class="form-row">
+                        <div class="row">
+                            <div class="form-group">
+                                <label for="rowName">Nombre:</label>
+                                <input type="text" class="form-control" id="rowName" formControlName="Name" placeholder="Juan Pérez" ngModel pattern="[a-zA-Z ]*">
+                            </div>                            
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <div class="form-group">
+                            <label for="rowAddress">Dirección:</label>
+                            <input type="text" class="form-control" id="rowAddress" formControlName="Address" placeholder="Av. Principal 123 ..">
+                        </div>                        
+                    </div>
+                    <br/>            
+                    <div class="row">
+                        <div class="form-group">
+                            <label for="rowPhone">Teléfono:</label>
+                            <input type="tel" class="form-control" id="rowPhone" formControlName="Phone" placeholder="5555555555" ngModel pattern="[- 0-9]+">  
+                        </div>                        
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <div class="form-group">
+                            <label for="rowDni">CURP:</label>
+                            <input type="text" class="form-control" id="rowDni" formControlName="Dni" placeholder="ABCD123456DEFGHI78">
+                        </div>                        
+                    </div>        
+                    <!--<br />
+                    <div class="row">                               
+                        <div class="col">
+                            <button type="button" class="btn btn-secondary" [disabled]="form.invalid || deleteValidator()" (click)="deleteUser()">Eliminar</button>
+                        </div>                    
+                    </div>-->
+                </form>
+            </div>            
         </div>
-        <br />
-
-        <div class="row">
-            <input type="tel" class="form-control" formControlName="Phone" placeholder="Teléfono">
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="resetForm()">{{modalParams.btn3}}</button>
+            <button type="button" class="btn btn-secondary"(click)="closeMessage(MessageDialog)">{{modalParams.btn2}}</button>
+            <button type="submit" class="btn btn-primary" [disabled]="form.invalid">{{modalParams.btn1}}</button>
         </div>
-        <br />
-        <div class="row">
-            <input type="text" class="form-control" formControlName="Dni" placeholder="CURP">
-        </div>
-
-        <br />
-        <div class="row">
-            <div class="col-7">
-                <button type="button" class="btn btn-secondary" (click)="resetForm()">Limpiar</button>
-            </div>
-            <div class="col">
-                <button type="button" class="btn btn-secondary" [disabled]="form.invalid || deleteValidator()" (click)="deleteUser()">Eliminar</button>
-            </div>
-            <div class="col">
-                <button type="submit" class="btn btn-primary" [disabled]="form.invalid">Guardar</button>
-            </div>
-        </div>
-
-    </form>
+    </ng-template>
     <br />
     <div class="row">
         <div class="col">
-            <div class="form-group">
-                <input type="text" class="form-control" name="filterUser" placeholder="Search.."
-                    [(ngModel)]="filterUser">
+            <div class="row">
+                <div class="col-7">
+                    <input 
+                        type="text"
+                        class="form-control"
+                        name="filterUser"
+                        placeholder="Buscar"
+                        [(ngModel)]="filterUser"
+                    >
+                </div>
+                <div class="col">
+                    <button 
+                    type="button" 
+                    class="btn btn-primary" 
+                    (click)="showMessage(MessageDialog)"
+                    >Nuevo
+                    </button>
+                </div>                
             </div>
         </div>
     </div>
@@ -57,7 +91,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let user of users | search:filterUser; let i = index" (click)="getRows(user)">
+                    <tr *ngFor="let user of users | search:filterUser; let i = index" (click)="getRows(user,MessageDialog)">
                         <th>{{user.Id}}</th>
                         <td>{{user.Name}}</td>
                         <td>{{user.Address}}</td>
